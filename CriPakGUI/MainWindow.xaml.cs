@@ -32,7 +32,7 @@ namespace CriPakGUI
             menu_importAssets.IsEnabled = false;
             progressbar0.Maximum = 100;
             MainApp.Instance.currentPackage.BasePath = @"C:/";
-            this.Title = string.Format( $"CRIWARE CPK GUI ({MainApp.BuildTime})");
+            this.Title = string.Format( $"CRIWARE CPK GUI (JoJo ASBR Ver.)");
         }
         private void menu_openfile_Click(object sender, RoutedEventArgs e)
         {

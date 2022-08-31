@@ -1,5 +1,14 @@
-CriPakTools-mod
+CriPakTools-mod (JoJo ASBR Ver.)
 ===========
+
+This tool was updated to support JoJo All-Star Battle R, as the PC version's CPKs had custom encryption on some files.
+
+Because of the nature of the encryption, this modified tool should only be used with JoJo ASBR PC version.
+
+Below is the original author's README:
+
+===========
+
 This tool is based on code by Falo , Nanashi3 ,esperknight and uyjulian. 
 
 I forked and added more features in the *NEW* GUI Version. 

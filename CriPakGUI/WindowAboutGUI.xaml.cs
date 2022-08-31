@@ -29,7 +29,12 @@ namespace CriPakGUI
         }
         private void SetWindowPrefs()
         {
-            textblock0.Text = @"CriPakTools-GUI
+            textblock0.Text = @"CriPakTools-GUI (JoJo ASBR Ver.)
+
+https://github.com/SutandoTsukai181/CriPakTools
+This tool was updated to support JoJo All-Star Battle R, as the PC version's CPKs had custom encryption on some files.
+Because of the nature of the encryption, this modified tool should only be used with JoJo ASBR PC version.
+Below is the original author's text:
 
 Github repository:
 https://github.com/wmltogether/CriPakTools

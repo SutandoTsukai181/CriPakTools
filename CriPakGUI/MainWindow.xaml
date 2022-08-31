@@ -1,7 +1,7 @@
 ﻿<Window x:Class="CriPakGUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="CRIWARE CPK GUI" Height="360" Width="640" ResizeMode="CanResizeWithGrip" SizeToContent="WidthAndHeight" MinWidth="640" MinHeight="358" Icon="Resources/1.ico" MaxHeight="640">
+        Title="CRIWARE CPK GUI (JoJo ASBR Ver.)" Height="360" Width="640" ResizeMode="CanResizeWithGrip" SizeToContent="WidthAndHeight" MinWidth="640" MinHeight="358" Icon="Resources/1.ico" MaxHeight="640">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
