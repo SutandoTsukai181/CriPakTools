@@ -152,5 +152,38 @@ namespace LibCPK
             return dest;
         }
 
+        public static byte[] CryptJoJoASBR(byte[] data, uint size)
+        {
+            var pos = 0;
+
+            uint v1 = size * 0x5f64 + 0x5dec219f;
+            v1 = v1 / 32 ^ v1 * 0x1da597;
+            uint v2 = v1 / 32 + 0x85c9c2 ^ v1 * 0x1da597;
+            uint v3 = v2 / 32 + 0x10b9384 ^ v2 * 0x1da597;
+            uint v4 = v3 / 32 + 0x1915d46 ^ v3 * 0x1da597;
+
+            do
+            {
+                v1 = v1 * 2048 ^ v1;
+                uint v5 = v4 ^ ((v4 / 2048 ^ v1) / 256) ^ v1;
+                var v6Arr = new byte[] { (byte)v5, (byte)(v5 >> 8), (byte)(v5 >> 16), (byte)(v5 >> 24) };
+
+                uint v7 = Math.Min(4, size);
+                for (var i = 0; i < v7; i++)
+                {
+                    data[pos + i] = (byte)(data[pos + i] ^ v6Arr[i]);
+                }
+
+                size -= v7;
+                pos += 4;
+
+                v1 = v2;
+                v2 = v3;
+                v3 = v4;
+                v4 = v5;
+            } while (size > 0);
+
+            return data;
+        }
     }
 }

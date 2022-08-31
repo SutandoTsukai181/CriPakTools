@@ -185,14 +185,11 @@ namespace CriPakGUI
                         currentName = currentName.TrimStart('/');
                     }
 
+                    int file_size = Int32.Parse(entries[i].FileSize.ToString());
                     oldFile.BaseStream.Seek((long)entries[i].FileOffset, SeekOrigin.Begin);
-
-                    string isComp = Encoding.ASCII.GetString(oldFile.ReadBytes(8));
-                    oldFile.BaseStream.Seek((long)entries[i].FileOffset, SeekOrigin.Begin);
-
-                    byte[] chunk = oldFile.ReadBytes(Int32.Parse(entries[i].FileSize.ToString()));
-
-                    if (isComp == "CRILAYLA")
+                    byte[] chunk = Tools.CryptJoJoASBR(oldFile.ReadBytes(file_size), (uint)file_size);
+                    
+                    if (Encoding.ASCII.GetString(chunk, 0, 8) == "CRILAYLA")
                     {
                         int size = Int32.Parse((entries[i].ExtractSize ?? entries[i].FileSize).ToString());
 
@@ -299,14 +296,12 @@ namespace CriPakGUI
         {
             CPKTable entries = t as CPKTable;
             BinaryReader oldFile = new BinaryReader(File.OpenRead(MainApp.Instance.currentPackage.CpkContentName));
+
+            int file_size = Int32.Parse(entries.FileSize.ToString());
             oldFile.BaseStream.Seek((long)entries.FileOffset, SeekOrigin.Begin);
+            byte[] chunk = Tools.CryptJoJoASBR(oldFile.ReadBytes(file_size), (uint)file_size);
 
-            string isComp = Encoding.ASCII.GetString(oldFile.ReadBytes(8));
-            oldFile.BaseStream.Seek((long)entries.FileOffset, SeekOrigin.Begin);
-
-            byte[] chunk = oldFile.ReadBytes(Int32.Parse(entries.FileSize.ToString()));
-
-            if (isComp == "CRILAYLA")
+            if (Encoding.ASCII.GetString(chunk, 0, 8) == "CRILAYLA")
             {
                 int size;
                 if (entries.ExtractSize == 0)
