@@ -294,7 +294,7 @@ namespace LibCPK
 
         public void WritePacket(BinaryWriter cpk, string ID, ulong position, byte[] packet)
         {
-            if (position != 0xffffffffffffffff)
+            if (packet != null && position != 0xffffffffffffffff)
             {
                 cpk.BaseStream.Seek((long)position, SeekOrigin.Begin);
                 byte[] encrypted;
