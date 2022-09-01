@@ -185,5 +185,7 @@ namespace LibCPK
 
             return data;
         }
+
+        public static HashSet<string> UnencryptedCPKs = new HashSet<string> { "adx2.cpk", "movie.cpk", "sound.cpk" };
     }
 }

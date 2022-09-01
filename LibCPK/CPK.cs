@@ -11,6 +11,7 @@ namespace LibCPK
 {
     public class CPK
     {
+        public string originalBaseName;
         public List<FileEntry> fileTable = new List<FileEntry>();
         public Dictionary<string, object> cpkdata;
         public UTF utf;
@@ -32,6 +33,8 @@ namespace LibCPK
                 EndianReader br = new EndianReader(File.OpenRead(sPath), true);
                 MemoryStream ms;
                 EndianReader utfr;
+
+                originalBaseName = Path.GetFileName(sPath);
 
                 if (Tools.ReadCString(br, 4) != "CPK ")
                 {

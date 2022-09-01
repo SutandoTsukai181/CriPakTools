@@ -163,6 +163,8 @@ namespace CriPakGUI
                 bool bFileRepeated = Tools.CheckListRedundant(entries);
                 this.Dispatcher.Invoke(new datagridDelegate(updateDatagrid), new object[] { (bool)false });
 
+                bool needsEncryption = !Tools.UnencryptedCPKs.Contains(MainApp.Instance.currentPackage.BaseName);
+
                 while (i < entries.Count)
                 {
                     this.Dispatcher.Invoke(new progressbarDelegate(updateprogressbar), new object[] { (float)i / (float)entries.Count * 100f });
@@ -187,7 +189,12 @@ namespace CriPakGUI
 
                     int file_size = Int32.Parse(entries[i].FileSize.ToString());
                     oldFile.BaseStream.Seek((long)entries[i].FileOffset, SeekOrigin.Begin);
-                    byte[] chunk = Tools.CryptJoJoASBR(oldFile.ReadBytes(file_size), (uint)file_size);
+
+                    byte[] chunk = oldFile.ReadBytes(file_size);
+                    if (needsEncryption)
+                    {
+                        chunk = Tools.CryptJoJoASBR(chunk, (uint)file_size);
+                    }
                     
                     if (Encoding.ASCII.GetString(chunk, 0, 8) == "CRILAYLA")
                     {
@@ -299,7 +306,12 @@ namespace CriPakGUI
 
             int file_size = Int32.Parse(entries.FileSize.ToString());
             oldFile.BaseStream.Seek((long)entries.FileOffset, SeekOrigin.Begin);
-            byte[] chunk = Tools.CryptJoJoASBR(oldFile.ReadBytes(file_size), (uint)file_size);
+
+            byte[] chunk = oldFile.ReadBytes(file_size);
+            if (!Tools.UnencryptedCPKs.Contains(MainApp.Instance.currentPackage.BaseName))
+            {
+                chunk = Tools.CryptJoJoASBR(chunk, (uint)file_size);
+            }
 
             if (Encoding.ASCII.GetString(chunk, 0, 8) == "CRILAYLA")
             {

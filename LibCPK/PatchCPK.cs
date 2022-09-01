@@ -39,6 +39,8 @@ namespace LibCPK
 
             List<FileEntry> entries = cpk.fileTable.OrderBy(x => x.FileOffset).ToList();
 
+            bool needsEncryption = !Tools.UnencryptedCPKs.Contains(cpk.originalBaseName);
+
             int id;
             bool bFileRepeated = Tools.CheckListRedundant(entries);
             for (int i = 0; i < entries.Count; i++)
@@ -126,7 +128,13 @@ namespace LibCPK
                                 entries[i].FileSize = Convert.ChangeType(dest_comp.Length, entries[i].FileSizeType);
                                 entries[i].ExtractSize = Convert.ChangeType(newbie.Length, entries[i].FileSizeType);
                                 cpk.UpdateFileEntry(entries[i]);
-                                newCPK.Write(Tools.CryptJoJoASBR(dest_comp, (uint)dest_comp.Length));
+
+                                if (needsEncryption)
+                                {
+                                    dest_comp = Tools.CryptJoJoASBR(dest_comp, (uint)dest_comp.Length);
+                                }
+
+                                newCPK.Write(dest_comp);
                                 onMsgUpdateChanged?.Invoke(string.Format("Update Entry: {0}, {1:x8}", entries[i].FileName, entries[i].FileOffset));
                                 onMsgUpdateChanged?.Invoke(string.Format(">> {0:x8}\r\n", dest_comp.Length));
                             }
@@ -138,7 +146,13 @@ namespace LibCPK
                                 entries[i].FileSize = Convert.ChangeType(newbie.Length, entries[i].FileSizeType);
                                 entries[i].ExtractSize = Convert.ChangeType(newbie.Length, entries[i].FileSizeType);
                                 cpk.UpdateFileEntry(entries[i]);
-                                newCPK.Write(Tools.CryptJoJoASBR(newbie, (uint)newbie.Length));
+
+                                if (needsEncryption)
+                                {
+                                    newbie = Tools.CryptJoJoASBR(newbie, (uint)newbie.Length);
+                                }
+
+                                newCPK.Write(newbie);
                                 onMsgUpdateChanged?.Invoke(string.Format("Update Entry: {0}, {1:x8}", entries[i].FileName, entries[i].FileOffset));
                             }
 
